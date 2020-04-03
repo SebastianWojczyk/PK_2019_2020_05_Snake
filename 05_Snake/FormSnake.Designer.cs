@@ -34,23 +34,28 @@
             // 
             // pictureBoxSnakeBoard
             // 
-            this.pictureBoxSnakeBoard.Location = new System.Drawing.Point(13, 13);
+            this.pictureBoxSnakeBoard.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBoxSnakeBoard.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxSnakeBoard.Name = "pictureBoxSnakeBoard";
-            this.pictureBoxSnakeBoard.Size = new System.Drawing.Size(994, 597);
+            this.pictureBoxSnakeBoard.Size = new System.Drawing.Size(1034, 636);
+            this.pictureBoxSnakeBoard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBoxSnakeBoard.TabIndex = 0;
             this.pictureBoxSnakeBoard.TabStop = false;
             // 
-            // Form1
+            // FormSnake
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1034, 636);
             this.Controls.Add(this.pictureBoxSnakeBoard);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "FormSnake";
+            this.Text = "Snake v0.9";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormSnake_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSnakeBoard)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

@@ -15,6 +15,7 @@ namespace _05_Snake
 
         public delegate void SnakeEvent();
         public event SnakeEvent SnakeMoved;
+        public event SnakeEvent GameEnded;
 
         private Random generator = new Random();
 
@@ -23,6 +24,7 @@ namespace _05_Snake
         private List<Point> snake;
         private SnakeDirection direction;
         private Point apple;
+        private int appleCount;
 
         private Timer timerSnakeMove = new Timer();
 
@@ -34,12 +36,19 @@ namespace _05_Snake
             private get => direction;
             set
             {
-                direction = value;
-                TimerSnakeMove_Tick(null, null);
+                if ((direction == SnakeDirection.Up && value != SnakeDirection.Down) ||
+                    (direction == SnakeDirection.Down && value != SnakeDirection.Up) ||
+                    (direction == SnakeDirection.Left && value != SnakeDirection.Right) ||
+                    (direction == SnakeDirection.Right && value != SnakeDirection.Left))
+                {
+                    direction = value;
+                    TimerSnakeMove_Tick(null, null);
+                }
             }
         }
 
-        public Point Apple { get => apple; set => apple = value; }
+        public Point Apple { get => apple; private set => apple = value; }
+        public int AppleCount { get => appleCount; private set => appleCount = value; }
 
         public SnakeLogic(int width, int height)
         {
@@ -55,6 +64,7 @@ namespace _05_Snake
             Direction = SnakeDirection.Up;
 
             generateApple();
+            AppleCount = 0;
 
             timerSnakeMove.Tick += TimerSnakeMove_Tick;
             timerSnakeMove.Interval = 500;
@@ -90,10 +100,22 @@ namespace _05_Snake
                     newHead = new Point(Snake.First().X, Snake.First().Y + 1);
                     break;
             }
+            newHead = new Point((newHead.X + Width) % Width, (newHead.Y + Height) % Height);
+
+            if(Snake.Contains(newHead))
+            {
+                timerSnakeMove.Stop();
+                if (GameEnded != null)
+                {
+                    GameEnded();
+                }
+                return;
+            }
 
             Snake.Insert(0, newHead);
             if (newHead == Apple)
             {
+                AppleCount++;
                 generateApple();
                 timerSnakeMove.Interval = (int)(timerSnakeMove.Interval * 0.8);
             }

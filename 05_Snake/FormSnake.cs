@@ -21,6 +21,7 @@ namespace _05_Snake
             mySnakeLogic = new SnakeLogic(20, 15);
 
             mySnakeLogic.SnakeMoved += MySnakeLogic_SnakeMoved;
+            mySnakeLogic.GameEnded += MySnakeLogic_GameEnded;
 
             pictureBoxSnakeBoard.Image = new Bitmap(mySnakeLogic.Width * fieldSize + 1,
                                                     mySnakeLogic.Height * fieldSize + 1);
@@ -32,6 +33,12 @@ namespace _05_Snake
         private void MySnakeLogic_SnakeMoved()
         {
             RepaintBoard();
+        }
+
+        private void MySnakeLogic_GameEnded()
+        {
+            RepaintBoard();
+            MessageBox.Show("Koniec");
         }
 
         private void RepaintBoard()
@@ -58,6 +65,12 @@ namespace _05_Snake
                                      mySnakeLogic.Apple.Y * fieldSize,
                                      fieldSize,
                                      fieldSize);
+
+            graphics.DrawString(mySnakeLogic.AppleCount.ToString(),
+                                new Font(FontFamily.GenericSansSerif, fieldSize * 2),
+                                new SolidBrush(Color.Brown),
+                                new Point(fieldSize / 2, fieldSize / 2));
+
             pictureBoxSnakeBoard.Refresh();
         }
 
