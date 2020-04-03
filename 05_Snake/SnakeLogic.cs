@@ -16,12 +16,12 @@ namespace _05_Snake
 
         private int width;
         private int height;
-        private Point snake;
+        private List<Point> snake;
         private Timer timerSnakeMove = new Timer();
 
         public int Width { get => width; private set => width = value; }
         public int Height { get => height; private set => height = value; }
-        public Point Snake { get => snake; private set => snake = value; }
+        public List<Point> Snake { get => snake; private set => snake = value; }
 
         public SnakeLogic(int width, int height)
         {
@@ -32,12 +32,21 @@ namespace _05_Snake
             timerSnakeMove.Interval = 500;
             timerSnakeMove.Tick += TimerSnakeMove_Tick;
 
-            snake = new Point(width / 2, height - 1);
+
+            Snake = new List<Point>();
+            Snake.Add(new Point(width / 2, height - 1));
+            Snake.Add(new Point(width / 2, height + 0));
+            Snake.Add(new Point(width / 2, height + 1));
+            Snake.Add(new Point(width / 2, height + 2));
         }
 
         private void TimerSnakeMove_Tick(object sender, EventArgs e)
         {
-            snake = new Point(snake.X, snake.Y - 1);
+            Point newHead = new Point(Snake.First().X, Snake.First().Y - 1);
+
+            Snake.Insert(0, newHead);
+            Snake.Remove(Snake.Last());
+
             if (SnakeMoved != null)
             {
                 SnakeMoved();

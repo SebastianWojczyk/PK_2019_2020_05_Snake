@@ -45,11 +45,14 @@ namespace _05_Snake
                                                                  fieldSize, fieldSize);
                 }
             }
-            graphics.FillEllipse(new SolidBrush(Color.GreenYellow),
-                                 mySnakeLogic.Snake.X * fieldSize,
-                                 mySnakeLogic.Snake.Y * fieldSize,
-                                 fieldSize,
-                                 fieldSize);
+            for (int i = 0; i < mySnakeLogic.Snake.Count; i++)
+            {
+                graphics.FillEllipse(new SolidBrush(Color.GreenYellow),
+                                     mySnakeLogic.Snake[i].X * fieldSize,
+                                     mySnakeLogic.Snake[i].Y * fieldSize,
+                                     fieldSize,
+                                     fieldSize);
+            }
             pictureBoxSnakeBoard.Refresh();
         }
     }
