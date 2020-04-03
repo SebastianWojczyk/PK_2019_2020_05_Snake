@@ -53,6 +53,11 @@ namespace _05_Snake
                                      fieldSize,
                                      fieldSize);
             }
+            graphics.FillEllipse(new SolidBrush(Color.Red),
+                                     mySnakeLogic.Apple.X * fieldSize,
+                                     mySnakeLogic.Apple.Y * fieldSize,
+                                     fieldSize,
+                                     fieldSize);
             pictureBoxSnakeBoard.Refresh();
         }
 

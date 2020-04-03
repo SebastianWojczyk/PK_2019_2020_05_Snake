@@ -16,10 +16,13 @@ namespace _05_Snake
         public delegate void SnakeEvent();
         public event SnakeEvent SnakeMoved;
 
+        private Random generator = new Random();
+
         private int width;
         private int height;
         private List<Point> snake;
         private SnakeDirection direction;
+        private Point apple;
 
         private Timer timerSnakeMove = new Timer();
 
@@ -36,15 +39,12 @@ namespace _05_Snake
             }
         }
 
+        public Point Apple { get => apple; set => apple = value; }
+
         public SnakeLogic(int width, int height)
         {
             this.Width = width;
             this.Height = height;
-
-            timerSnakeMove.Enabled = true;
-            timerSnakeMove.Interval = 500;
-            timerSnakeMove.Tick += TimerSnakeMove_Tick;
-
 
             Snake = new List<Point>();
             Snake.Add(new Point(width / 2, height - 1));
@@ -53,6 +53,23 @@ namespace _05_Snake
             Snake.Add(new Point(width / 2, height + 2));
 
             Direction = SnakeDirection.Up;
+
+            generateApple();
+
+            timerSnakeMove.Tick += TimerSnakeMove_Tick;
+            timerSnakeMove.Interval = 500;
+            timerSnakeMove.Enabled = true;
+        }
+
+        private void generateApple()
+        {
+            Point tmpApple;
+            do
+            {
+                tmpApple = new Point(generator.Next(Width), generator.Next(Height));
+            } while (Snake.Contains(tmpApple));
+
+            Apple = tmpApple;
         }
 
         private void TimerSnakeMove_Tick(object sender, EventArgs e)
@@ -75,7 +92,15 @@ namespace _05_Snake
             }
 
             Snake.Insert(0, newHead);
-            Snake.Remove(Snake.Last());
+            if (newHead == Apple)
+            {
+                generateApple();
+                timerSnakeMove.Interval = (int)(timerSnakeMove.Interval * 0.8);
+            }
+            else
+            {
+                Snake.Remove(Snake.Last());
+            }
 
             if (SnakeMoved != null)
             {
