@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace _05_Snake
 {
-    public partial class Form1 : Form
+    public partial class FormSnake : Form
     {
         SnakeLogic mySnakeLogic;
         const int fieldSize = 30;
         Graphics graphics;
-        public Form1()
+        public FormSnake()
         {
             InitializeComponent();
             mySnakeLogic = new SnakeLogic(20, 15);
@@ -54,6 +54,29 @@ namespace _05_Snake
                                      fieldSize);
             }
             pictureBoxSnakeBoard.Refresh();
+        }
+
+        private void FormSnake_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                case Keys.A:
+                    mySnakeLogic.Direction = SnakeLogic.SnakeDirection.Left;
+                    break;
+                case Keys.Right:
+                case Keys.D:
+                    mySnakeLogic.Direction = SnakeLogic.SnakeDirection.Right;
+                    break;
+                case Keys.Up:
+                case Keys.W:
+                    mySnakeLogic.Direction = SnakeLogic.SnakeDirection.Up;
+                    break;
+                case Keys.Down:
+                case Keys.S:
+                    mySnakeLogic.Direction = SnakeLogic.SnakeDirection.Down;
+                    break;
+            }
         }
     }
 }
